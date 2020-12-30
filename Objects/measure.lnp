@@ -1,0 +1,8 @@
+".\Objects\delay.obj",
+".\Objects\HC_SR04.obj",
+".\Objects\main.obj",
+".\Objects\Timer.obj",
+".\Objects\SG90.obj",
+".\Objects\TFT.obj" 
+TO ".\Objects\measure" 
+PRINT(".\Listings\measure.m51") RAMSIZE(256) 

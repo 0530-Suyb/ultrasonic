@@ -1,0 +1,65 @@
+C51 COMPILER V9.56.0.0   HC_SR04                                                           12/05/2020 20:37:10 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE HC_SR04
+OBJECT MODULE PLACED IN .\Objects\HC_SR04.obj
+COMPILER INVOKED BY: G:\KEIL C51\C51\BIN\C51.EXE HC_SR04.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -HC_SR04.lst) TABS(2) OBJECT(.\Objects\HC_SR04.obj)
+
+line level    source
+
+   1          #include "HC_SR04.h"
+   2          #include "delay.h"
+   3          
+   4          void SR04_Init()
+   5          {
+   6   1        Echo = 0;
+   7   1        Trig = 0;
+   8   1      }
+   9          
+  10          void ClrTimer()
+  11          {
+  12   1        TMOD = 0x11;
+  13   1        TR1 = 0;
+  14   1        TH1 = 0;
+  15   1        TL1 = 0;
+  16   1      }
+  17          
+  18          void sendStart()
+  19          {
+  20   1        Trig = 1;
+  21   1        delay_10us(2);
+  22   1        Trig = 0;
+  23   1      }
+  24          
+  25          u16 measure()
+  26          {
+  27   1        u16 distance;
+  28   1        u32 time;
+  29   1        
+  30   1        SR04_Init();
+  31   1        ClrTimer();
+  32   1        sendStart();
+  33   1        while(!Echo);
+  34   1        TR1 = 1;
+  35   1        while(Echo); //接收到回传信号，Echo被置低电平
+  36   1        TR1 = 0;
+  37   1        
+  38   1        time = TH1 * 256 + TL1;
+  39   1        distance = (int)(0.17 * time);
+  40   1        return distance;
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     81    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
